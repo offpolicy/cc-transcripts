@@ -1,0 +1,513 @@
+/* Design tokens copied from c9hub src/app.css */
+:root {
+	--bg-base: #0c0c0f;
+	--bg-elevated: #141419;
+	--bg-card: #18181f;
+	--bg-card-hover: #1f1f28;
+	--bg-overlay: rgba(10, 10, 14, 0.88);
+
+	--text-primary: #e8e8ed;
+	--text-secondary: #8e8ea0;
+	--text-muted: #5e5e73;
+
+	--status-permission: #d4915a;
+	--status-input: #5bb896;
+
+	--accent-purple: #9b8afb;
+	--accent-blue: #5b8def;
+	--accent-red: #d9534f;
+
+	--border-default: rgba(255, 255, 255, 0.05);
+	--border-muted: rgba(255, 255, 255, 0.04);
+	--border-focus: rgba(124, 92, 252, 0.5);
+	--border-glow: rgba(255, 255, 255, 0.08);
+
+	--space-xs: 4px;
+	--space-sm: 8px;
+	--space-md: 12px;
+	--space-lg: 16px;
+	--space-xl: 24px;
+	--space-2xl: 32px;
+	--space-3xl: 48px;
+
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 10px;
+
+	--font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+	--font-mono: 'Geist Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+
+	--transition-fast: 0.15s ease;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html, body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	background: var(--bg-base);
+	color: var(--text-primary);
+	font-family: var(--font-sans);
+	font-size: 15px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code, pre, .mono { font-family: var(--font-mono); }
+
+/* ── Viewer header ─────────────────────────────────────────────── */
+.viewer-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: var(--space-md);
+	padding: var(--space-md) var(--space-xl);
+	background: rgba(12, 12, 15, 0.92);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border-bottom: 1px solid var(--border-default);
+}
+
+.header-titles {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	flex: 1;
+}
+
+.header-file {
+	font-family: var(--font-mono);
+	font-size: 13px;
+	color: var(--text-primary);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.header-meta {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	color: var(--text-muted);
+	letter-spacing: 0.02em;
+}
+
+.close-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	background: transparent;
+	border: 1px solid var(--border-default);
+	border-radius: var(--radius-sm);
+	color: var(--text-secondary);
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.close-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.layout {
+	max-width: 920px;
+	margin: 0 auto;
+	padding: var(--space-xl);
+}
+
+/* ── Dropzone ───────────────────────────────────────────────────── */
+.dropzone {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-md);
+	min-height: 60vh;
+	padding: var(--space-3xl) var(--space-xl);
+	border: 1px dashed var(--border-default);
+	border-radius: var(--radius-xl);
+	background: var(--bg-elevated);
+	cursor: pointer;
+	transition: background var(--transition-fast), border-color var(--transition-fast);
+	outline: none;
+}
+
+.dropzone:hover,
+.dropzone:focus-visible {
+	background: var(--bg-card);
+	border-color: var(--border-glow);
+}
+
+.dropzone-icon {
+	font-family: var(--font-mono);
+	font-size: 32px;
+	color: var(--accent-purple);
+	line-height: 1;
+}
+
+.dropzone-title {
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--text-primary);
+	letter-spacing: -0.01em;
+}
+
+.dropzone-subtitle {
+	font-size: 14px;
+	color: var(--text-secondary);
+}
+
+.dropzone-link {
+	color: var(--accent-blue);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.dropzone-hint {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	color: var(--text-muted);
+	margin-top: var(--space-md);
+	text-align: center;
+}
+
+.dropzone-hint code {
+	background: var(--bg-card);
+	padding: 2px 6px;
+	border-radius: var(--radius-sm);
+	color: var(--text-secondary);
+}
+
+/* ── Drag-over overlay ──────────────────────────────────────────── */
+.drop-overlay {
+	position: fixed;
+	inset: 0;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+	background: rgba(124, 92, 252, 0.08);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	z-index: 100;
+}
+
+body.drag-over .drop-overlay { display: flex; }
+
+.drop-overlay-card {
+	padding: var(--space-md) var(--space-xl);
+	background: var(--bg-card);
+	border: 1px dashed var(--accent-purple);
+	border-radius: var(--radius-lg);
+	color: var(--text-primary);
+	font-family: var(--font-mono);
+	font-size: 14px;
+}
+
+/* ── Error banner ───────────────────────────────────────────────── */
+.error-banner {
+	margin: var(--space-md) 0;
+	padding: var(--space-sm) var(--space-md);
+	background: rgba(217, 83, 79, 0.08);
+	border: 1px solid rgba(217, 83, 79, 0.4);
+	border-radius: var(--radius-sm);
+	color: var(--accent-red);
+	font-family: var(--font-mono);
+	font-size: 13px;
+}
+
+/* ── Message list ───────────────────────────────────────────────── */
+.messages {
+	display: flex;
+	flex-direction: column;
+}
+
+/* ── Message bubble (ported from c9hub MessageBubble.svelte) ───── */
+.message-bubble {
+	margin: var(--space-sm) 0;
+	padding: var(--space-md) var(--space-lg);
+	max-width: 100%;
+	border-left: 2px solid var(--border-default);
+	border-radius: var(--radius-sm);
+	transition: background var(--transition-fast);
+	animation: fade-in 0.3s ease-out backwards;
+}
+
+.message-bubble:hover { background: rgba(255, 255, 255, 0.04); }
+
+.message-bubble.user {
+	border-left: 3px solid var(--text-primary);
+	background: rgba(255, 255, 255, 0.04);
+}
+
+.message-bubble.assistant {
+	border-left: 2px solid var(--text-secondary);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.message-bubble.thinking {
+	border-left: 2px dashed var(--status-permission);
+	background: rgba(251, 146, 60, 0.04);
+}
+
+.message-bubble.tool-use {
+	border-left: 2px solid var(--status-input);
+	background: rgba(52, 211, 153, 0.03);
+}
+
+.message-bubble.tool-result {
+	border-left: 2px solid var(--border-default);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.message-header {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+	margin-bottom: var(--space-sm);
+}
+
+.message-icon {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	color: var(--text-secondary);
+}
+
+.message-role {
+	font-family: var(--font-mono);
+	font-weight: 600;
+	font-size: 12px;
+	color: var(--text-secondary);
+	letter-spacing: 0.02em;
+}
+
+.message-bubble.user .message-role,
+.message-bubble.user .message-icon {
+	color: var(--text-primary);
+}
+
+.message-bubble.assistant .message-role { color: var(--accent-purple); }
+
+.message-bubble.thinking .message-role,
+.message-bubble.thinking .message-icon { color: var(--status-permission); }
+
+.message-bubble.tool-use .message-role,
+.message-bubble.tool-use .message-icon { color: var(--status-input); }
+
+.message-time {
+	margin-left: auto;
+	font-size: 12px;
+	color: var(--text-muted);
+	font-family: var(--font-mono);
+	letter-spacing: 0.02em;
+}
+
+.message-content {
+	color: var(--text-secondary);
+	font-size: 15px;
+	line-height: 1.6;
+	white-space: normal;
+	word-wrap: break-word;
+}
+
+.message-content p { margin: 0 0 var(--space-md) 0; }
+.message-content p:last-child { margin-bottom: 0; }
+
+.message-content h1,
+.message-content h2,
+.message-content h3,
+.message-content h4 {
+	color: var(--text-primary);
+	font-weight: 600;
+	margin: var(--space-lg) 0 var(--space-sm) 0;
+	line-height: 1.2;
+}
+
+.message-content h1 { font-size: 18px; }
+.message-content h2 { font-size: 17px; }
+.message-content h3 { font-size: 16px; }
+.message-content h4 { font-size: 15px; }
+
+.message-content .code-block-wrapper {
+	margin: var(--space-md) 0;
+	border: 1px solid var(--border-default);
+	border-radius: var(--radius-sm);
+	background: var(--bg-elevated);
+}
+
+.message-content .code-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--space-xs) var(--space-md);
+	border-bottom: 1px solid var(--border-muted);
+	background: var(--bg-card);
+}
+
+.message-content .code-lang {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	color: var(--text-muted);
+	letter-spacing: 0.02em;
+}
+
+.message-content .code-actions { display: flex; gap: 4px; }
+
+.message-content .code-dot {
+	width: 4px;
+	height: 4px;
+	background: var(--border-default);
+}
+
+.message-content pre {
+	margin: 0;
+	padding: var(--space-md);
+	overflow-x: auto;
+	background: transparent;
+}
+
+.message-content code {
+	font-family: var(--font-mono);
+	font-size: 14px;
+	background: var(--bg-elevated);
+	padding: 2px 4px;
+	border-radius: var(--radius-sm);
+	color: var(--text-primary);
+}
+
+.message-content pre code {
+	padding: 0;
+	background: transparent;
+	display: block;
+	line-height: 1.5;
+	white-space: pre;
+}
+
+.message-content ul,
+.message-content ol {
+	margin: 0 0 var(--space-md) var(--space-lg);
+	padding: 0;
+}
+
+.message-content li {
+	margin-bottom: var(--space-xs);
+	padding-left: 4px;
+}
+
+.message-content li::marker {
+	color: var(--text-muted);
+	font-family: var(--font-mono);
+	font-size: 13px;
+}
+
+.message-content blockquote {
+	margin: var(--space-md) 0;
+	padding: var(--space-sm) var(--space-md);
+	border-left: 2px solid var(--border-default);
+	border-radius: var(--radius-sm);
+	background: var(--bg-elevated);
+	color: var(--text-secondary);
+	font-style: italic;
+}
+
+.message-content hr {
+	border: 0;
+	border-top: 1px solid var(--border-muted);
+	margin: var(--space-lg) 0;
+}
+
+.message-content strong,
+.message-content b {
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.message-content em,
+.message-content i {
+	font-style: italic;
+	color: var(--text-primary);
+}
+
+.message-content a {
+	color: var(--status-input);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	transition: color var(--transition-fast);
+}
+
+.message-content a:hover { color: var(--text-primary); }
+
+.message-images {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-sm);
+	margin-bottom: var(--space-sm);
+}
+
+.attached-image {
+	max-width: 100%;
+	max-height: 400px;
+	border: 1px solid var(--border-default);
+	border-radius: var(--radius-sm);
+	object-fit: contain;
+}
+
+.message-bubble.user .message-content { color: var(--text-primary); }
+
+.message-bubble.thinking .message-content,
+.message-bubble.tool-use .message-content,
+.message-bubble.tool-result .message-content {
+	color: var(--text-secondary);
+	max-height: 250px;
+	overflow-y: auto;
+	white-space: pre-wrap;
+	font-family: var(--font-mono);
+	font-size: 13px;
+	background: rgba(0, 0, 0, 0.2);
+	padding: var(--space-sm) var(--space-md);
+	border: 1px solid var(--border-default);
+	border-radius: var(--radius-sm);
+}
+
+@keyframes fade-in {
+	from { opacity: 0; transform: translateY(4px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+	.layout { padding: var(--space-md); }
+	.viewer-header { padding: var(--space-sm) var(--space-md); }
+	.message-bubble {
+		margin: var(--space-xs) 0;
+		padding: var(--space-sm) var(--space-md);
+	}
+	.message-content { font-size: 14px; line-height: 1.5; }
+	.message-content code { font-size: 12px; }
+	.message-content pre code { font-size: 12px; line-height: 1.45; }
+	.message-content pre { padding: var(--space-sm); }
+	.message-content h1 { font-size: 16px; }
+	.message-content h2 { font-size: 15px; }
+	.message-content h3 { font-size: 14px; }
+	.message-bubble.thinking .message-content,
+	.message-bubble.tool-use .message-content,
+	.message-bubble.tool-result .message-content {
+		max-height: 180px;
+		font-size: 12px;
+		padding: var(--space-xs) var(--space-sm);
+	}
+	.message-header { margin-bottom: var(--space-xs); }
+	.message-role, .message-time { font-size: 11px; }
+	.attached-image { max-height: 300px; }
+	.dropzone { min-height: 50vh; padding: var(--space-xl) var(--space-md); }
+}
